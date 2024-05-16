@@ -7,6 +7,11 @@ This app is created to predict the best university according to your marks in va
 - Predicts the best university based on your marks in Science, Maths, History, English, and GRE.
 - Provides personalized course recommendations.
 - Offers personalized advice to help improve your chances of admission.
+- Utilizes deep learning for accurate predictions.
+
+## Deep Learning Library
+
+The app uses TensorFlow, a popular deep learning library, for building and training the predictive model.
 
 ## Usage
 
