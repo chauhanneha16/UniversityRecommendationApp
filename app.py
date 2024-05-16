@@ -29,7 +29,7 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         "Maths": maths_marks,
         "History": history_marks,
         "English": english_marks,
-        "GRE": gre_marks
+        
     }
     highest_mark_subject = max(marks_dict, key=marks_dict.get)
 
@@ -41,8 +41,7 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         recommended_course = "History"
     elif highest_mark_subject == "English":
         recommended_course = "Literature"
-    elif highest_mark_subject == "GRE":
-        recommended_course = "Business Administration"
+   
 
     # Personalized advice
     advice = []
