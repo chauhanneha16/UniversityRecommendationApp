@@ -2,6 +2,8 @@ import streamlit as st
 import numpy as np
 import pickle
 from tensorflow.keras.models import load_model
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load the trained model and preprocessors
 model = load_model('university_recommendation_model.h5')
@@ -26,6 +28,7 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         "Maths": maths_marks,
         "History": history_marks,
         "English": english_marks,
+        "GRE": gre_marks
     }
     highest_mark_subject = max(marks_dict, key=marks_dict.get)
 
@@ -37,7 +40,8 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         recommended_course = "History"
     elif highest_mark_subject == "English":
         recommended_course = "Literature"
-  
+    elif highest_mark_subject == "GRE":
+        recommended_course = "Business Administration"
 
     # Personalized advice
     advice = []
@@ -67,23 +71,56 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         advice.append("Gain practical experience by volunteering at clinics or hospitals.")
     elif recommended_course == "Literature":
         advice.append("Engage in extensive reading and writing practice.")
-  
+    elif recommended_course == "Business Administration":
+        advice.append("Develop leadership and management skills through relevant courses and activities.")
 
     return predicted_uni, recommended_course, advice
 
 # Streamlit app layout
+st.set_page_config(page_title="University Recommendation System", page_icon="🎓", layout="wide")
+
 st.title('University Recommendation System')
+st.subheader('Advisor: Dr. Neha Chauhan')
 
-science_marks = st.number_input('Science Marks', min_value=0.0, max_value=100.0)
-maths_marks = st.number_input('Maths Marks', min_value=0.0, max_value=100.0)
-history_marks = st.number_input('History Marks', min_value=0.0, max_value=100.0)
-english_marks = st.number_input('English Marks', min_value=0.0, max_value=100.0)
-gre_marks = st.number_input('GRE Marks', min_value=0.0, max_value=340.0)
+st.markdown("""
+Welcome to the University Recommendation System! Input your academic marks and GRE score to receive a personalized university and course recommendation along with some advice to help you succeed.
+""")
 
-if st.button('Submit'):
+# Sidebar for user inputs
+st.sidebar.header("Enter Your Marks")
+
+science_marks = st.sidebar.slider('Science Marks', min_value=0.0, max_value=100.0, value=75.0)
+maths_marks = st.sidebar.slider('Maths Marks', min_value=0.0, max_value=100.0, value=75.0)
+history_marks = st.sidebar.slider('History Marks', min_value=0.0, max_value=100.0, value=75.0)
+english_marks = st.sidebar.slider('English Marks', min_value=0.0, max_value=100.0, value=75.0)
+gre_marks = st.sidebar.slider('GRE Marks', min_value=0.0, max_value=340.0, value=300.0)
+
+if st.sidebar.button('Submit'):
     university, course, advice = predict_university_and_advice(science_marks, maths_marks, history_marks, english_marks, gre_marks)
-    st.write(f"Recommended University: {university}")
-    st.write(f"Recommended Course: {course}")
-    st.write("Personal Advice:")
+    
+    st.write(f"### Recommended University: **{university}**")
+    st.write(f"### Recommended Course: **{course}**")
+    
+    st.write("### Personal Advice:")
     for item in advice:
         st.write(f"- {item}")
+    
+    # Visualize the input data
+    st.write("### Your Marks Overview")
+    marks = {
+        'Subjects': ['Science', 'Maths', 'History', 'English', 'GRE'],
+        'Marks': [science_marks, maths_marks, history_marks, english_marks, gre_marks]
+    }
+    marks_df = pd.DataFrame(marks)
+    
+    fig, ax = plt.subplots()
+    sns.barplot(x='Subjects', y='Marks', data=marks_df, ax=ax)
+    ax.set_ylim(0, 100)
+    st.pyplot(fig)
+
+st.sidebar.markdown("""
+---
+### About
+This app provides university and course recommendations based on your academic marks and GRE score, along with personalized advice to help you achieve your goals.
+""")
+
