@@ -68,8 +68,7 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         advice.append("Gain practical experience by volunteering at clinics or hospitals.")
     elif recommended_course == "Literature":
         advice.append("Engage in extensive reading and writing practice.")
-    elif recommended_course == "Business Administration":
-        advice.append("Develop leadership and management skills through relevant courses and activities.")
+  
 
     return predicted_uni, recommended_course, advice
 
