@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
 import pickle
 from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
@@ -123,4 +124,3 @@ st.sidebar.markdown("""
 ### About
 This app provides university and course recommendations based on your academic marks and GRE score, along with personalized advice to help you achieve your goals.
 """)
-
