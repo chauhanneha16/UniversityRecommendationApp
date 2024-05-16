@@ -38,8 +38,7 @@ def predict_university_and_advice(science_marks, maths_marks, history_marks, eng
         recommended_course = "History"
     elif highest_mark_subject == "English":
         recommended_course = "Literature"
-    elif highest_mark_subject == "GRE":
-        recommended_course = "Business Administration"
+  
 
     # Personalized advice
     advice = []
